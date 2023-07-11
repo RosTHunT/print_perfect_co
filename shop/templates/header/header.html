@@ -12,7 +12,7 @@
                         {% if request.user.is_authenticated %}
                             <li><a href="{% url 'app_auth:logout' %}">Вихід </a></li>
                             <li><p style="color: darkred "> | </p></li>
-                            <li><a href="#"><i class="fa fa-user-o"></i> Особистий кабінет</a></li>
+                            <li><a href="{% url 'app_profile:profile' %}"><i class="fa fa-user-o"></i> Особистий кабінет</a></li>
                         {% else %}
                             <li><a href="{% url 'app_auth:register' %}">Реєстрація </a></li>
                             <li><p style="color: darkred "> | </p></li>

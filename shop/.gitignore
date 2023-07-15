@@ -1,5 +1,7 @@
 .env
 
+app_auth/client_secrets.json
+
 __pycache__/
 
 static/

@@ -3,24 +3,31 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.views import View
 
+from app_auth.forms import PrimaryUserCreationForm
+
 
 class RegisterView(View):
     def get(self, request):
-        form = UserCreationForm()
+        form = PrimaryUserCreationForm()
         context = {
             'form': form
         }
         return render(request, 'app_auth/register.html', context)
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = PrimaryUserCreationForm(request.POST)
         context = {
             'form': form
         }
         if form.is_valid():
             form.save()
-            return redirect('auth_app/login')  # Перенаправлення на сторінку входу після успішної реєстрації
-        return render(request, 'registration/register.html', context)
+            email = request.POST.get('email')
+            password = request.POST.get('password1')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('app_profile:profile')  # Перенаправлення на сторінку після успішного входу
+        return render(request, 'app_auth/register.html', context)
 
 
 class LoginView(View):
@@ -39,11 +46,11 @@ class LoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('app_main:index')  # Перенаправлення на сторінку після успішного входу
+                return redirect('app_profile:profile')  # Перенаправлення на сторінку після успішного входу
             else:
                 error_message = 'Невірне ім\'я користувача або пароль'
                 return render(request, 'auth_app/login.html', {'error_message': error_message})
-            print(username, password)
+
             # Виконати необхідні дії після успішного входу
             return redirect('app_main:index')  # Перенаправлення на сторінку після успішного входу
 

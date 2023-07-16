@@ -4,9 +4,11 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from app_auth.forms import PrimaryUserCreationForm
+from decorators import only_authenticated, only_not_authenticated
 
 
 class RegisterView(View):
+    @only_not_authenticated
     def get(self, request):
         form = PrimaryUserCreationForm()
         context = {
@@ -14,6 +16,7 @@ class RegisterView(View):
         }
         return render(request, 'app_auth/register.html', context)
 
+    @only_not_authenticated
     def post(self, request):
         form = PrimaryUserCreationForm(request.POST)
         context = {
@@ -31,6 +34,7 @@ class RegisterView(View):
 
 
 class LoginView(View):
+    @only_not_authenticated
     def get(self, request):
         form = AuthenticationForm()
         context = {
@@ -38,6 +42,7 @@ class LoginView(View):
         }
         return render(request, 'app_auth/login.html', context)
 
+    @only_not_authenticated
     def post(self, request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -58,6 +63,7 @@ class LoginView(View):
 
 
 class LogoutView(View):
+    @only_authenticated
     def get(self, request):
         logout(request)
         return redirect('app_main:index')

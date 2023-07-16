@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from functools import wraps
 
+
 def only_authenticated(method):
     """ Decorator for class methods. Redirect to home if user is not authenticated"""
 
@@ -9,7 +10,7 @@ def only_authenticated(method):
         request = kwargs.get('request') if 'request' in kwargs else args[1]
 
         if not request.user.is_authenticated:
-            return redirect('main_app:login_and_register_view')
+            return redirect('app_main:login')
 
         return method(*args, **kwargs)
     return wrapper
@@ -23,7 +24,7 @@ def only_superuser(method):
         request = kwargs.get('request') if 'request' in kwargs else args[1]
 
         if not request.user.is_superuser:
-            return redirect('main_app:index_view')
+            return redirect('app_main:index_view')
 
         return method(*args, **kwargs)
 
@@ -38,7 +39,7 @@ def only_not_authenticated(method):
         request = kwargs.get('request') if 'request' in kwargs else args[1]
 
         if request.user.is_authenticated:
-            return redirect('profile_app:profile_view')
+            return redirect('app_profile:profile')
 
         return method(*args, **kwargs)
     return wrapper

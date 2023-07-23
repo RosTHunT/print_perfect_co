@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'app_auth.apps.AppAuthConfig',
     'app_product.apps.AppProductConfig',
     'app_profile.apps.AppProfileConfig',
+    'app_cart.apps.AppCartConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shop.context_processors.get_about_us',
+                'shop.context_processors.cart',
             ],
         },
     },
@@ -157,3 +159,5 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CART_SESSION_ID = 'cart'

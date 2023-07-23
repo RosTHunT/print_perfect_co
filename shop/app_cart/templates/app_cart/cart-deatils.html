@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head %}
+{{ block.super }}
+{% block title %}
+ <title>Корзина</title>
+{% endblock title %}
+{% endblock head %}
+
+{% block content %}
+
+<div>
+ {{ cart }}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{{ block.super }}
+
+{% endblock %}

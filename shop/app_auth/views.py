@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -29,7 +29,7 @@ class RegisterView(View):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('app_profile:profile')  # Перенаправлення на сторінку після успішного входу
+                return redirect('app_profile:profile')
         return render(request, 'app_auth/register.html', context)
 
 
@@ -51,15 +51,14 @@ class LoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('app_profile:profile')  # Перенаправлення на сторінку після успішного входу
-            else:
-                error_message = 'Невірне ім\'я користувача або пароль'
-                return render(request, 'auth_app/login.html', {'error_message': error_message})
-
-            # Виконати необхідні дії після успішного входу
-            return redirect('app_main:index')  # Перенаправлення на сторінку після успішного входу
-
-        return render(request, 'app_auth/login.html', {'form': form})
+                return redirect('app_profile:profile')
+        else:
+            error_message = 'Невірне ім\'я користувача або пароль'
+            context = {
+                'error_message': error_message,
+                'form': form,
+            }
+            return render(request, 'auth_app/login.html', context)
 
 
 class LogoutView(View):

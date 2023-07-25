@@ -105,8 +105,8 @@ class Cart(object):
                     'id': product.pk,
                     'image': product.image.url if product.image else '#',
                 },
-                'name': product.name,
-                'category': product.categories.name,
+                'name': product.title,
+                'category': product.category.title,
                 'price': product_obj['price'],
                 'total_price': product_obj['total_price'],
                 'quantity': product_obj['quantity']

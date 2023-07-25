@@ -78,6 +78,7 @@ TEMPLATES = [
 
                 'app_main.context_processors.get_about_us',
                 'app_cart.context_processors.get_cart',
+                'app_main.context_processors.get_client_ip'
             ],
         },
     },

@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Назва')
+    title = models.CharField(max_length=255, verbose_name='Назва')
     is_published = models.BooleanField(default=False, verbose_name='Опублікувати Категорію')
     recommended = models.BooleanField(default=False, verbose_name='Рекомендувати Категорію')
 
@@ -14,11 +14,11 @@ class Category(models.Model):
         verbose_name_plural = 'КатегоріЇ'
 
     def __str__(self):
-        return f'Категорія: {self.name}'
+        return f'Категорія: {self.title}'
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=1024, blank=True, null=True)
+    title = models.CharField(max_length=1024, blank=True, null=True)
     image = models.ImageField(upload_to='upload/products/images/%Y/%m/%d/', blank=True, null=True)
     description = models.TextField(max_length=5000, blank=True, null=True)
 
@@ -27,7 +27,7 @@ class Product(models.Model):
 
     recommended = models.BooleanField(default=False, verbose_name='Рекомендувати товар')
 
-    categories = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, related_name='products')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, related_name='products')
 
     quantity = models.PositiveIntegerField()
 
@@ -58,4 +58,4 @@ class Product(models.Model):
     #     return super(Product, self).delete(*args, **kwargs)
 
     def __str__(self):
-        return f' {self.name} | {self.categories}'
+        return f' {self.title} | {self.category}'

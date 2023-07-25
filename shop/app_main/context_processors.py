@@ -10,6 +10,3 @@ def get_about_us(request):
     return locals()
 
 
-def cart(request):
-    cart = Cart(request)
-    return locals()

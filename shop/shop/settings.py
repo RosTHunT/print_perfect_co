@@ -75,8 +75,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'shop.context_processors.get_about_us',
-                'shop.context_processors.cart',
+
+                'app_main.context_processors.get_about_us',
+                'app_cart.context_processors.get_cart',
             ],
         },
     },
